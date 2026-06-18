@@ -1,30 +1,26 @@
 from __future__ import annotations
-import csv, io, re, sqlite3
-from collections import Counter, defaultdict
-from datetime import date, datetime
+import json, re, sqlite3
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 APP_NAME='Local RAG Knowledge Assistant'
 DB_FILE=Path(__file__).resolve().parent.parent/'data'/'app.sqlite'
 DB_FILE.parent.mkdir(exist_ok=True)
 app=FastAPI(title=APP_NAME, version='0.1.0')
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'], allow_headers=['*'])
-def json_dumps(obj: Any) -> str:
-    import json; return json.dumps(obj, ensure_ascii=False)
-def json_loads(text: str) -> Any:
-    import json; return json.loads(text)
+
 def db() -> sqlite3.Connection:
     conn=sqlite3.connect(DB_FILE); conn.row_factory=sqlite3.Row; conn.execute('pragma journal_mode=wal'); return conn
+@app.on_event("startup")
 def init_db() -> None:
     with db() as conn: conn.execute('create table if not exists records (id integer primary key autoincrement, kind text not null, title text not null, payload text not null, created_at text not null)')
-init_db()
 def save_record(kind: str, title: str, payload: str) -> int:
     with db() as conn:
-        cur=conn.execute('insert into records(kind,title,payload,created_at) values (?,?,?,?)',(kind,title,payload,datetime.utcnow().isoformat())); return int(cur.lastrowid)
+        cur=conn.execute('insert into records(kind,title,payload,created_at) values (?,?,?,?)',(kind,title,payload,datetime.now(timezone.utc).isoformat())); return int(cur.lastrowid)
 def rows(kind: str | None = None) -> list[dict[str, Any]]:
     with db() as conn:
         data=conn.execute('select * from records where kind=? order by id desc',(kind,)).fetchall() if kind else conn.execute('select * from records order by id desc').fetchall()

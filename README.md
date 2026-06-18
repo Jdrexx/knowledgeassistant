@@ -4,6 +4,8 @@
 
 Upload notes/docs, chunk them, search relevant passages, and answer questions with citations.
 
+![rag-demo](screenshots/rag-demo.png)
+
 ## Why this project exists
 
 This is a portfolio-ready MVP in the **private knowledge search** lane. It demonstrates practical API product thinking, clean documentation, tests, and a working local browser demo.
