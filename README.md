@@ -1,5 +1,7 @@
 # Local RAG Knowledge Assistant
 
+![Python](https://img.shields.io/badge/Python-3.11_|_3.12-3776AB?style=flat-square&logo=python) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi) ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite) ![RAG](https://img.shields.io/badge/RAG-7C3AED?style=flat-square) ![Chunking](https://img.shields.io/badge/Chunking-0EA5E9?style=flat-square)
+
 Upload notes/docs, chunk them, search relevant passages, and answer questions with citations.
 
 ## Why this project exists
