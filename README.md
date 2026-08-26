@@ -8,7 +8,7 @@ Upload notes/docs, chunk them, search relevant passages, and answer questions wi
 
 ## Why this project exists
 
-This is a portfolio-ready MVP in the **private knowledge search** lane. It demonstrates practical API product thinking, clean documentation, tests, and a working local browser demo.
+Searching your own notes and documents shouldn't mean uploading them to someone else's servers. This tool chunks your files locally, finds relevant passages by keyword, and answers questions with citations — everything stays on your machine.
 
 ## Features
 
